@@ -22,31 +22,8 @@
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-      }
-
-      .copy-success {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: white;
-        border-radius: 5px;
-        z-index: 2000;
-        display: none;
-        animation: fadeIn 0.3s;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translate(-50%, 10px);
-        }
-        to {
-          opacity: 1;
-          transform: translate(-50%, 0);
-        }
+        padding: 20px;
+        max-width: 90%;
       }
 
       .angpao {
@@ -58,11 +35,30 @@
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
       }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+        .angpao {
+          padding: 10px;
+        }
+        .rekening {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .rekening button {
+          width: 100%;
+        }
+      }
     </style>
   </head>
-  <body class="flex items-center justify-center min-h-screen">
-    <div class="container mx-auto p-8 max-w-lg text-center rounded-2xl">
-      <h1 class="text-4xl font-bold text-gray-800 mb-6">
+  <body class="flex items-center justify-center min-h-screen px-4">
+    <div class="container text-center rounded-2xl">
+      <h1 class="text-3xl font-bold text-gray-800 mb-4">
         Berikan Angpao &amp; Kado Pernikahan
       </h1>
       <p class="text-gray-700 text-lg">
@@ -79,15 +75,44 @@
               <span class="font-bold text-xl">Bank BSI</span>
               <img src="/assets/bsi.png" alt="Logo BSI" class="h-8" />
             </div>
-            <p class="text-sm">a.n. Cut Isra Mawardah</p>
+            <p class="text-sm">a.n. Nama Penerima</p>
             <div
-              class="flex items-center justify-between bg-white text-black p-3 rounded-lg shadow-md"
+              class="flex items-center justify-between bg-white text-black p-3 rounded-lg shadow-md rekening"
             >
               <span id="rekening-bsi" class="font-mono font-bold"
-                >7168906018</span
+                >1234567890</span
               >
               <button
                 onclick="copyToClipboard('rekening-bsi')"
+                class="bg-gray-800 text-white px-3 py-1 rounded flex items-center gap-1 hover:bg-gray-900"
+              >
+                <i class="fas fa-copy"></i>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank Mandiri -->
+        <div class="w-full angpao p-5 rounded-xl text-white">
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-xl">Bank Mandiri</span>
+              <img
+                src="/api/placeholder/80/30"
+                alt="Logo Mandiri"
+                class="h-8"
+              />
+            </div>
+            <p class="text-sm">a.n. Nama Penerima</p>
+            <div
+              class="flex items-center justify-between bg-white text-black p-3 rounded-lg shadow-md rekening"
+            >
+              <span id="rekening-mandiri" class="font-mono font-bold"
+                >0987654321</span
+              >
+              <button
+                onclick="copyToClipboard('rekening-mandiri')"
                 class="bg-gray-800 text-white px-3 py-1 rounded flex items-center gap-1 hover:bg-gray-900"
               >
                 <i class="fas fa-copy"></i>
@@ -104,7 +129,10 @@
     </div>
 
     <!-- Pesan Berhasil Copy -->
-    <div id="copy-success" class="copy-success">
+    <div
+      id="copy-success"
+      class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-600 text-white py-2 px-4 rounded-lg hidden"
+    >
       Nomor rekening berhasil disalin!
     </div>
 
@@ -117,12 +145,8 @@
             const successMessage = document.getElementById("copy-success");
             successMessage.style.display = "block";
 
-            const button = event.currentTarget;
-            button.classList.add("shake");
-
             setTimeout(() => {
               successMessage.style.display = "none";
-              button.classList.remove("shake");
             }, 2000);
           })
           .catch((err) => {
