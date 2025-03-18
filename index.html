@@ -3,126 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Angpao & Kado Pernikahan</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap");
-
-      body {
-        font-family: "Playfair Display", serif;
-        background: linear-gradient(to right, #f0e6d2, #d5c6a1);
-      }
-
-      .container {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 90%;
-      }
-
-      .angpao {
-        background: linear-gradient(to right, #d1a054, #b68d40);
-        transition: all 0.3s ease-in-out;
-      }
-
-      .angpao:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      }
-
-      @media (max-width: 768px) {
-        .container {
-          padding: 15px;
-        }
-        h1 {
-          font-size: 1.5rem;
-        }
-        .angpao {
-          padding: 10px;
-        }
-        .rekening {
-          flex-direction: column;
-          gap: 10px;
-        }
-        .rekening button {
-          width: 100%;
-        }
-      }
-    </style>
   </head>
-  <body class="flex items-center justify-center min-h-screen px-4">
-    <div class="container text-center rounded-2xl">
-      <h1 class="text-3xl font-bold text-gray-800 mb-4">
-        Berikan Angpao &amp; Kado Pernikahan
-      </h1>
-      <p class="text-gray-700 text-lg">
-        Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Jika
-        memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara
-        cashless.
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div
+      class="container mx-auto p-6 max-w-lg text-center bg-white shadow-lg rounded-lg"
+    >
+      <h1 class="text-3xl font-bold text-red-600">Berikan Angpao & Kado</h1>
+      <p class="text-gray-700 mt-2 text-sm px-4">
+        Doa restu Anda sangat berarti bagi kami. Jika ingin memberi tanda kasih,
+        Anda dapat memberi kado secara cashless.
       </p>
 
-      <div class="flex flex-col gap-6 mt-6">
-        <!-- Bank BSI -->
-        <div class="w-full angpao p-5 rounded-xl text-white">
-          <div class="flex flex-col gap-3">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-xl">Bank BSI</span>
-              <img src="/assets/bsi.png" alt="Logo BSI" class="h-8" />
-            </div>
-            <p class="text-sm">a.n. Cut Isra Mawardah</p>
-            <div
-              class="flex items-center justify-between bg-white text-black p-3 rounded-lg shadow-md rekening"
-            >
-              <span id="rekening-bsi" class="font-mono font-bold"
-                >7168906018</span
-              >
-              <button
-                onclick="copyToClipboard('rekening-bsi')"
-                class="bg-gray-800 text-white px-3 py-1 rounded flex items-center gap-1 hover:bg-gray-900"
-              >
-                <i class="fas fa-copy"></i>
-                <span>Copy</span>
-              </button>
-            </div>
-          </div>
+      <!-- Bank BSI -->
+      <div class="mt-6 p-4 bg-green-600 text-white rounded-lg">
+        <h2 class="font-bold text-xl">Bank BSI</h2>
+        <p class="text-sm">a.n. Cut Isra Mawardah</p>
+        <div class="mt-2 flex items-center bg-white p-2 rounded">
+          <input
+            id="rekening-bsi"
+            type="text"
+            value="7168906018"
+            class="w-full text-black text-center font-mono font-bold outline-none"
+            readonly
+          />
+          <button
+            onclick="copyToClipboard('rekening-bsi')"
+            class="bg-green-700 text-white px-3 py-1 rounded ml-2"
+          >
+            Copy
+          </button>
         </div>
       </div>
 
-      <p class="text-gray-700 italic mt-6">
+      <p class="text-gray-600 italic mt-6">
         Terima kasih atas doa dan perhatian Anda
       </p>
     </div>
 
-    <!-- Pesan Berhasil Copy -->
-    <div
-      id="copy-success"
-      class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-600 text-white py-2 px-4 rounded-lg hidden"
-    >
-      Nomor rekening berhasil disalin!
-    </div>
-
     <script>
-      function copyToClipboard(elementId) {
-        const text = document.getElementById(elementId).innerText;
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {
-            const successMessage = document.getElementById("copy-success");
-            successMessage.style.display = "block";
-
-            setTimeout(() => {
-              successMessage.style.display = "none";
-            }, 2000);
-          })
-          .catch((err) => {
-            console.error("Gagal menyalin teks: ", err);
-          });
+      function copyToClipboard(id) {
+        let input = document.getElementById(id);
+        input.select();
+        input.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        alert("Nomor rekening berhasil disalin!");
       }
     </script>
   </body>
